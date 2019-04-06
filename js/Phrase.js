@@ -30,7 +30,7 @@ class Phrase {
   checkLetter(guess) {
     const letters = document.getElementsByClassName(`letter`);
     const userChoice = guess;
-    const match = false;
+    let match = false;
     for (let i = 0; i < letters.length; i += 1) {
       if (letters[i].textContent === userChoice) {
         // showMatchedLetter(letters[i])
@@ -40,10 +40,11 @@ class Phrase {
     return match;
   }
 
-  showMatchedLetter(element) {
-    element.classList.remove(`hide`);
-    element.classList.add(`show`);
+  showMatchedLetter(className) {
+    const matchingLetters = document.getElementsByClassName(`${className}`);
+    for (let i = 0; i < matchingLetters.length; i += 1) {
+      matchingLetters[i].classList.remove(`hide`);
+      matchingLetters[i].classList.add(`show`);
+    }
   }
-  // loop through phase array
-  // check each letter and if matching add show class
 }
