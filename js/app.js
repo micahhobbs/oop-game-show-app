@@ -12,8 +12,6 @@ startButton.addEventListener(`click`, function() {
   keys.addEventListener(`click`, function(event) {
     if (event.target.classList.contains(`key`)) {
       newGame.handleInteraction(event);
-      // activePhrase.checkLetter(event.target.innerText);
     }
-    // event.target.innerText
   });
 });
