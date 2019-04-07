@@ -28,15 +28,22 @@ class Game {
   }
 
   handleInteraction(event) {
-    const userGuess = event.target.innerText;
+    let userGuess;
+    if (event.type === `click`) {
+      userGuess = event.target.innerText;
+    }
+    if (event.type === `keyup`) {
+      userGuess = event.key;
+    }
     // if letter exists add chosen css class and call showmatched letter
     // then checkforWin method. if true (won) call game over method
-    // else add wrong css class and call the remove life moethod
+    // else add wrong css class and call the remove life method
     if (this.activePhrase.checkLetter(userGuess)) {
       event.target.classList.add(`chosen`);
       this.activePhrase.showMatchedLetter(`${userGuess}`);
       if (this.checkForWin()) {
         this.gameOver();
+        this.resetGame();
       }
     } else {
       event.target.classList.add(`wrong`);
@@ -53,7 +60,6 @@ class Game {
     if (this.missed === 5) {
       this.gameOver();
     }
-    // checkForLoss() if true, call game over
   }
 
   checkForWin() {
@@ -72,12 +78,13 @@ class Game {
     const resetButton = document.getElementById(`btn__reset`);
     if (this.missed === 5) {
       gameOverMessage.innerText = `You lost! Better luck next time`;
+      this.resetGame();
     } else {
       gameOverMessage.innerText = `Congrats you won!`;
+      this.resetGame();
     }
     overlay.style.display = `flex`;
     resetButton.innerText = `Try again`;
-    this.resetGame();
   }
 
   resetGame() {
@@ -86,17 +93,19 @@ class Game {
     while (phraseList.hasChildNodes()) {
       phraseList.removeChild(phraseList.lastChild);
     }
-    // Enable all of the onscreen keyboard buttons and update each to use the key CSS class, and not use the chosen or wrong CSS classes.
+    // Enable all of the onscreen keyboard buttons and update each to use the
+    // key CSS class, and not use the chosen or wrong CSS classes.
     const keys = document.getElementsByClassName(`key`);
     for (let i = 0; i < keys.length; i += 1) {
       keys[i].removeAttribute(`disabled`, `false`);
       keys[i].classList.remove(`wrong`, `chosen`);
     }
-    // Reset all of the heart images (i.e. the player's lives) in the scoreboard at the bottom of the gameboard to display the liveHeart.png image.
+    // Reset all of the heart images (i.e. the player's lives) in the
+    // scoreboard at the bottom of the gameboard to display the liveHeart.png image.
     this.missed = 0;
     const hearts = document.querySelectorAll(`.tries img`);
-    for (let i = 0; i < hearts.length; i += 1) {
-      hearts[i].src = `images/liveHeart.png`;
+    for (let j = 0; j < hearts.length; j += 1) {
+      hearts[j].src = `images/liveHeart.png`;
     }
   }
 }

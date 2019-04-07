@@ -12,8 +12,7 @@ class Phrase {
     const phraseAsArray = this.phrase.split(``);
     // get DOM elements
     const phraseList = document.getElementById('phrase-list');
-    // create DOM elements
-    // loop through array and append DOM elements
+    // create DOM elements and append DOM elements
     for (let i = 0; i < phraseAsArray.length; i += 1) {
       const listItem = document.createElement(`li`);
       listItem.textContent = phraseAsArray[i];
